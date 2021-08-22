@@ -118,16 +118,43 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"scripts.js":[function(require,module,exports) {
+var fileInput = document.getElementById('file-input');
 var img = document.getElementById('img');
-var pred = document.getElementById('Prediction'); // Load the model.
-
-cocoSsd.load().then(function (model) {
-  // detect objects in the image.
-  model.detect(img).then(function (predictions) {
-    console.log('Predictions: ', predictions);
-    console.log(Object.values(predictions)[0].class);
-    pred.innerHTML = "This is a : " + Object.values(predictions)[0].class;
+var pred = document.getElementById('Prediction');
+var player = document.getElementById('player');
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var captureButton = document.getElementById('capture');
+fileInput.addEventListener('change', function (e) {
+  console.log(URL.createObjectURL(e.target.files)[0]);
+  img.src = Object.values(e.target.files)[0];
+  cocoSsd.load().then(function (model) {
+    model.detect(img).then(function (predictions) {
+      console.log('Predictions: ', predictions);
+      console.log(Object.values(predictions)[0].class);
+      pred.innerHTML = "Y'a un pourcentage de : " + Object.values(predictions)[0].score * 100 + " d'être un/une : " + Object.values(predictions)[0].class;
+    }).catch(function (error) {
+      pred.innerHTML = "Unrecognized";
+    });
   });
+});
+var constraints = {
+  video: true
+};
+captureButton.addEventListener('click', function () {
+  context.drawImage(player, 0, 0, canvas.width, canvas.height);
+  cocoSsd.load().then(function (model) {
+    model.detect(canvas).then(function (predictions) {
+      console.log('Predictions: ', predictions);
+      console.log(Object.values(predictions)[0].class);
+      pred.innerHTML = "Y'a un pourcentage de : " + Math.floor(Object.values(predictions)[0].score * 100) + "% d'être un/une : " + Object.values(predictions)[0].class;
+    }).catch(function (error) {
+      pred.innerHTML = "Unrecognized";
+    });
+  });
+});
+navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+  player.srcObject = stream;
 });
 },{}],"../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -157,7 +184,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51883" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50525" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

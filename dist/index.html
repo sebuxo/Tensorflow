@@ -8,14 +8,17 @@
     <title>Document</title>
     <html>
    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
-
-<!-- script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"> </script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"> </script> -->
+ <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"> </script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"> </script> 
 </html><script src="/styles.8986bff4.js"></script></head>
 <body>
-<video id="webcam" autoplay="" playsinline="" width="640" height="480"></video>
-<canvas id="canvas" class="d-none"></canvas>
+<input type="file" accept="image/*" id="file-input">
+<video id="player" controls="" autoplay=""></video>
+<button id="capture">Capture</button>
+<canvas id="canvas" width="320" height="240"></canvas>
+<p id="Prediction"></p>
+<img id="img" src="">
 
-<p id="Prediction">This is a : </p>
+<script src="/scripts.b71a6038.js"></script>
 </body>
 </html>
