@@ -31,8 +31,7 @@ context.drawImage(player, 0, 0, canvas.width, canvas.height);
 cocoSsd.load().then(model => {
 
   model.detect(canvas).then(predictions => {
-    console.log('Predictions: ', predictions);
-    console.log(Object.values(predictions)[0].class)
+    
     pred.innerHTML ="Y'a un pourcentage de : " + Math.floor((Object.values(predictions)[0].score*100))  + "% d'être un/une : "+ Object.values(predictions)[0].class
   }).catch(error =>{
     pred.innerHTML = "Unrecognized";

@@ -145,8 +145,6 @@ captureButton.addEventListener('click', function () {
   context.drawImage(player, 0, 0, canvas.width, canvas.height);
   cocoSsd.load().then(function (model) {
     model.detect(canvas).then(function (predictions) {
-      console.log('Predictions: ', predictions);
-      console.log(Object.values(predictions)[0].class);
       pred.innerHTML = "Y'a un pourcentage de : " + Math.floor(Object.values(predictions)[0].score * 100) + "% d'être un/une : " + Object.values(predictions)[0].class;
     }).catch(function (error) {
       pred.innerHTML = "Unrecognized";
@@ -184,7 +182,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50525" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56752" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
